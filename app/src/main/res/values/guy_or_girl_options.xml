@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="guy_or_girl_option">
+        <item>Guy</item>
+        <item>Girl</item>
+
+    </string-array>
+
+</resources>

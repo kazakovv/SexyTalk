@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BabyTalk.iml" filepath="$PROJECT_DIR$/BabyTalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BabyTalk2.iml" filepath="$PROJECT_DIR$/BabyTalk2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SexyTalk.iml" filepath="$PROJECT_DIR$/SexyTalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeViews.iml" filepath="$PROJECT_DIR$/SwipeViews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/times-square/times-square.iml" filepath="$PROJECT_DIR$/times-square/times-square.iml" />
+    </modules>
+  </component>
+</project>
+
