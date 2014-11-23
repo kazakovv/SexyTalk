@@ -68,7 +68,7 @@
     <string name="title_activity_send_to">SendTo</string>
     <string name="title_activity_view_movie">ViewMovieActivity</string>
     <string name="title_activity_sexy_calendar">SexyCalendar</string>
-
+    <string name="show_private_days_dialog_button">Private Days</string>
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>

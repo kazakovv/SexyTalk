@@ -5,7 +5,7 @@ import android.app.Application;
 import com.parse.Parse;
 
 
-public class BabyTalkApplication extends Application {
+public class SexyTalkApplication extends Application {
 
     @Override
     public void onCreate() {

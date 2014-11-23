@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Handler;
 
 /**
  * Created by Victor on 17/10/2014.
@@ -25,6 +26,7 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
     DatePicker datePicker;
     Spinner spinnerCycle;
     int averageLengthOfMenstrualCycle;
+    protected static int LENGHT_OF_MENSTRUATION = 5;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -57,8 +59,9 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                     public void onClick(DialogInterface dialog, int id) {
 
                         String messageToDisplay = calculateFertileDays();
-
                         sexyMessage.setText(messageToDisplay);
+
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -78,23 +81,23 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
         int day = datePicker.getDayOfMonth();
 
         //pravia si dva kalendara. I dvata sega sochat kam parvia den ot predishnia menstrualen cikal
-        Calendar firstFertileDay = new GregorianCalendar(year,month,day);
-        Calendar lastFertileDay = new GregorianCalendar(year,month,day);
+        Calendar firstDayToHaveSex = new GregorianCalendar(year,month,day);
+        Calendar lastDayToHaveSex = new GregorianCalendar(year,month,day);
 
 
 
         //izchisliavane na dnite
-        firstFertileDay.add(Calendar.DAY_OF_MONTH, (averageLengthOfMenstrualCycle - 17));
-        lastFertileDay.add(Calendar.DAY_OF_MONTH,  (averageLengthOfMenstrualCycle - 12));
+        firstDayToHaveSex.add(Calendar.DAY_OF_MONTH, LENGHT_OF_MENSTRUATION);
+        lastDayToHaveSex.add(Calendar.DAY_OF_MONTH, averageLengthOfMenstrualCycle);
 
         //sastaviane na message
-        String first = firstFertileDay.get(Calendar.DAY_OF_MONTH) + " " +
-                new DateFormatSymbols().getMonths()[firstFertileDay.get(Calendar.MONTH)] + " " +
-                firstFertileDay.get(Calendar.YEAR);
+        String first = firstDayToHaveSex.get(Calendar.DAY_OF_MONTH) + " " +
+                new DateFormatSymbols().getMonths()[firstDayToHaveSex.get(Calendar.MONTH)] + " " +
+                firstDayToHaveSex.get(Calendar.YEAR);
 
-        String last = lastFertileDay.get(Calendar.DAY_OF_MONTH) + " " +
-                new DateFormatSymbols().getMonths()[lastFertileDay.get(Calendar.MONTH)] + " " +
-                lastFertileDay.get(Calendar.YEAR);
+        String last = lastDayToHaveSex.get(Calendar.DAY_OF_MONTH) + " " +
+                new DateFormatSymbols().getMonths()[lastDayToHaveSex.get(Calendar.MONTH)] + " " +
+                lastDayToHaveSex.get(Calendar.YEAR);
         String messageToDisplay = "You are ready for sex from " + first  +
                 " until " + last ;
 
@@ -116,4 +119,5 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }

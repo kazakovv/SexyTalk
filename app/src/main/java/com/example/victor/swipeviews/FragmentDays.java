@@ -1,46 +1,49 @@
 package com.example.victor.swipeviews;
 
-import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.DatePicker;
 import android.widget.TextView;
-
-
-import java.util.zip.Inflater;
+import android.widget.Toast;
 
 /**
  * Created by Victor on 13/10/2014.
  */
 public class FragmentDays extends Fragment  {
+
     private TextView mainMessage;
     private TextView fertileMessage;
     private Button showSexyCalendarButton;
+    private Button showPrivateDaysCalendarButton;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frament_one_layout, container, false);
+    private DatePicker datePickerDialog;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+
+    private Button okButtonDatePickerDialog;
+
+    int year;
+    int month;
+    int day;
+
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        final View inflatedView = inflater.inflate(R.layout.frament_love_days, container, false);
 
         //vrazvam poletata, koito shte zapametiavam
         mainMessage = (TextView) inflatedView.findViewById(R.id.mainMessage);
         fertileMessage = (TextView) inflatedView.findViewById(R.id.textViewFertileMessage);
         showSexyCalendarButton = (Button) inflatedView.findViewById(R.id.showSexyCalendarButton);
+        showPrivateDaysCalendarButton = (Button) inflatedView.findViewById(R.id.showPrivateDaysDialog);
 
         //Zarezda mainMessage ot savedSettings. Ako niama nishto zapazeno mu dava prazen text
         SharedPreferences savedSettings = getActivity().getSharedPreferences("MYPREFS",0);
@@ -55,9 +58,35 @@ public class FragmentDays extends Fragment  {
             }
         });
 
+
+
+        showPrivateDaysCalendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+              /*
+               DialogFragment newDialog = new MenstrualCalendarDialog();
+                newDialog.show(getActivity().getFragmentManager(),"Welcome");
+                */
+
+
+            }
+        });
+
+
+
         return inflatedView;
 
     }
+
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
 
     @Override
@@ -74,6 +103,7 @@ public class FragmentDays extends Fragment  {
 
 
     }
+
 
 
 }
