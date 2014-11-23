@@ -14,31 +14,60 @@ import java.util.Date;
 
 public class SexyCalendar extends Activity {
 
-    public static final int MONTHS_TO_DISPLAY_IN_CALENDAR =2;
+    public static final int MONTHS_TO_DISPLAY_IN_CALENDAR = 1;
 
+    Calendar firstDayToHaveSex;
+    Calendar lasttDayToHaveSex;
+    ArrayList<Date> datesForSex;
+    Date firstDateToDisplay;
+    Date lastDateToDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sexy_calendar);
-        Calendar nextMonth = Calendar.getInstance();
-        nextMonth.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
 
-        Calendar today2 = Calendar.getInstance();
-        ArrayList<Date> dates = new ArrayList<Date>();
-        today2.add(Calendar.DATE, 3);
-        dates.add(today2.getTime());
-        today2.add(Calendar.DATE, 5);
-        dates.add(today2.getTime());
+
+        //Vzimame parvia i poslednia den, ako sa zadadeni
+
+        Bundle b = getIntent().getExtras();
+        if(b.get(Statics.CALENDAR_FIRST_DAY_AFTER_MENSTRUATION) !=null ||
+                b.get(Statics.CALENDAR_LAST_DAY_BEFORE_NEXT_CYCLE) != null ) {
+            firstDayToHaveSex = (Calendar) b.get(Statics.CALENDAR_FIRST_DAY_AFTER_MENSTRUATION);
+            lasttDayToHaveSex = (Calendar) b.get(Statics.CALENDAR_LAST_DAY_BEFORE_NEXT_CYCLE);
+            datesForSex = new ArrayList<Date>();
+            datesForSex.add(firstDayToHaveSex.getTime());
+            datesForSex.add(lasttDayToHaveSex.getTime());
+
+            //zadavame range, koito da se pokazva v kalendara
+            Calendar temp = firstDayToHaveSex;
+            temp.add(Calendar.MONTH, - MONTHS_TO_DISPLAY_IN_CALENDAR); //izvazhdam zashtoto ima minus
+            firstDateToDisplay = temp.getTime();
+
+            temp = lasttDayToHaveSex;
+            temp.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
+            lastDateToDisplay = temp.getTime();
+        }
+
+
+
+        //ako e prazen zadavame dneshtanata data
+        if(datesForSex == null) {
+            datesForSex = new ArrayList<Date>();
+            datesForSex.add(new Date());
+
+            firstDateToDisplay = new Date(); //pokazva dneshnata data
+            Calendar nextMonth = Calendar.getInstance();
+            nextMonth.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
+            lastDateToDisplay = nextMonth.getTime();
+        }
 
 
 
         CalendarPickerView calendar = (CalendarPickerView) findViewById(R.id.sexyCalendar);
-        Date today = new Date();
-        calendar.init(today, nextMonth.getTime())
-                .withSelectedDate(today)
+        calendar.init(firstDateToDisplay, lastDateToDisplay)
                 .inMode(CalendarPickerView.SelectionMode.RANGE)
-                .withSelectedDates(dates);
+                .withSelectedDates(datesForSex);
 
     }
 

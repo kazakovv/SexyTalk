@@ -10,4 +10,9 @@ public class Statics {
     public static final String CALENDAR_YEAR = "year";
     public static final String CALENDAR_DAY = "day";
     public static final String AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE = "averageCycleLength";
+
+    //KEYS za podavane na info m/u FragmentDAys i SexyCalendar activity
+
+    public static final String CALENDAR_FIRST_DAY_AFTER_MENSTRUATION = "firstDayAfterMenstruation";
+    public static final String CALENDAR_LAST_DAY_BEFORE_NEXT_CYCLE = "lastDayBeforeNextCycle";
 }

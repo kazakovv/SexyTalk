@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Enter something"
-        android:id="@+id/textViewFertileMessage"
+        android:id="@+id/textViewSexyMessage"
         android:layout_below="@+id/mainMessage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

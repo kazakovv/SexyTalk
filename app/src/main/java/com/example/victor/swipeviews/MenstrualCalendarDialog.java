@@ -29,7 +29,6 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
     Spinner spinnerCycle;
     int averageLengthOfMenstrualCycle;
 
-    protected static int LENGHT_OF_MENSTRUATION = 5;
 
 
 
@@ -43,8 +42,7 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
         //vrazvam kalendara
         datePicker = (DatePicker) inflatedView.findViewById(R.id.datePicker);
 
-        //vrazvam text message
-        final TextView sexyMessage = (TextView) getActivity().findViewById(R.id.textViewFertileMessage);
+
 
         //vrazvam spinnerCycle
         spinnerCycle = (Spinner) inflatedView.findViewById(R.id.spinnerMenstrualCycleLength);
@@ -57,14 +55,15 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
 
         // Set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
+
         builder.setView(inflatedView)
                 // Add action buttons
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        String messageToDisplay = calculateFertileDays();
-                        sexyMessage.setText(messageToDisplay);
+                        //String messageToDisplay = calculateFertileDays();
+                        //sexyMessage.setText(messageToDisplay);
 
                         //vrashta infoto kam onActivityResult v FragmentDays
                         String averageCycleLength = spinnerCycle.getSelectedItem().toString();
@@ -82,8 +81,6 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                         getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,i);
                         dismiss() ;
 
-                        //getTargetFragment().onActivityResult(getTargetRequestCode(),
-                        //        Activity.RESULT_OK, getActivity().getIntent());
 
                     }
                 })
@@ -97,45 +94,11 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
         return builder.create();
     }
 
-    private String calculateFertileDays() {
-        //vimam den, msesec, godina ot kalendara
-        int year = datePicker.getYear();
-        int month = datePicker.getMonth();
-        int day = datePicker.getDayOfMonth();
-
-        //pravia si dva kalendara. I dvata sega sochat kam parvia den ot predishnia menstrualen cikal
-        Calendar firstDayToHaveSex = new GregorianCalendar(year,month,day);
-        Calendar lastDayToHaveSex = new GregorianCalendar(year,month,day);
-
-
-
-        //izchisliavane na dnite
-        firstDayToHaveSex.add(Calendar.DAY_OF_MONTH, LENGHT_OF_MENSTRUATION);
-        lastDayToHaveSex.add(Calendar.DAY_OF_MONTH, averageLengthOfMenstrualCycle);
-
-        //sastaviane na message
-        String first = firstDayToHaveSex.get(Calendar.DAY_OF_MONTH) + " " +
-                new DateFormatSymbols().getMonths()[firstDayToHaveSex.get(Calendar.MONTH)] + " " +
-                firstDayToHaveSex.get(Calendar.YEAR);
-
-        String last = lastDayToHaveSex.get(Calendar.DAY_OF_MONTH) + " " +
-                new DateFormatSymbols().getMonths()[lastDayToHaveSex.get(Calendar.MONTH)] + " " +
-                lastDayToHaveSex.get(Calendar.YEAR);
-        String messageToDisplay = "You are ready for sex from " + first  +
-                " until " + last ;
-
-        return messageToDisplay;
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.d("Vic", "this is the dialog " + parent.getItemAtPosition(position));
-        Log.d("Vic","this is the dialog " + position);
-
         averageLengthOfMenstrualCycle = Integer.parseInt((String) parent.getItemAtPosition(position));
 
-        Log.d("Vic","conversion succesfull " + averageLengthOfMenstrualCycle);
     }
 
     @Override
