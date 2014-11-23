@@ -137,9 +137,9 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
                 return true;
 
             case R.id.menu_fertility_calendar:
-                DialogFragment newDialog = new MenstrualCalendarDialog();
-                newDialog.show(getFragmentManager(), "Welcome");
-                Log.d("Vic", "Calendar menu");
+                //MenstrualCalendarDialog newDialog = new MenstrualCalendarDialog();
+                //newDialog.show(getFragmentManager(), "Welcome");
+                //Log.d("Vic", "Calendar menu");
                 return true;
 
             case R.id.menu_sex:

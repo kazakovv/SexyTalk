@@ -1,10 +1,13 @@
 package com.example.victor.swipeviews;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
+
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,6 @@ import android.widget.TextView;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.logging.Handler;
 
 /**
  * Created by Victor on 17/10/2014.
@@ -26,7 +28,10 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
     DatePicker datePicker;
     Spinner spinnerCycle;
     int averageLengthOfMenstrualCycle;
+
     protected static int LENGHT_OF_MENSTRUATION = 5;
+
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -61,6 +66,24 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                         String messageToDisplay = calculateFertileDays();
                         sexyMessage.setText(messageToDisplay);
 
+                        //vrashta infoto kam onActivityResult v FragmentDays
+                        String averageCycleLength = spinnerCycle.getSelectedItem().toString();
+
+                        Intent i = new Intent();
+                        Bundle extras = new Bundle();
+
+                        extras.putInt(Statics.CALENDAR_YEAR,datePicker.getYear());
+                        extras.putInt(Statics.CALENDAR_MONTH,datePicker.getMonth());
+                        extras.putInt(Statics.CALENDAR_DAY,datePicker.getDayOfMonth());
+                        extras.putInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE,
+                                Integer.parseInt(averageCycleLength));
+
+                        i.putExtras(extras);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,i);
+                        dismiss() ;
+
+                        //getTargetFragment().onActivityResult(getTargetRequestCode(),
+                        //        Activity.RESULT_OK, getActivity().getIntent());
 
                     }
                 })

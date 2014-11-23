@@ -1,12 +1,13 @@
 package com.example.victor.swipeviews;
 
-import android.app.Dialog;
+
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +19,20 @@ import android.widget.Toast;
 /**
  * Created by Victor on 13/10/2014.
  */
-public class FragmentDays extends Fragment  {
+public class FragmentDays extends Fragment {
 
     private TextView mainMessage;
     private TextView fertileMessage;
     private Button showSexyCalendarButton;
     private Button showPrivateDaysCalendarButton;
 
-    private DatePicker datePickerDialog;
+    private static final int MENSTRUAL_CALENDAR_DIALOG = 11;
     private int mYear;
     private int mMonth;
     private int mDay;
+    private int mAverageLengthOfMenstrualCycle;
 
-    private Button okButtonDatePickerDialog;
 
-    int year;
-    int month;
-    int day;
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frament_love_days, container, false);
@@ -64,10 +62,9 @@ public class FragmentDays extends Fragment  {
             @Override
             public void onClick(View view) {
 
-              /*
-               DialogFragment newDialog = new MenstrualCalendarDialog();
-                newDialog.show(getActivity().getFragmentManager(),"Welcome");
-                */
+                MenstrualCalendarDialog newDialog = new MenstrualCalendarDialog();
+                newDialog.setTargetFragment(FragmentDays.this,MENSTRUAL_CALENDAR_DIALOG);
+                newDialog.show(getFragmentManager(),"Welcome");
 
 
             }
@@ -85,8 +82,33 @@ public class FragmentDays extends Fragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
 
+            if(requestCode == MENSTRUAL_CALENDAR_DIALOG) {
+
+
+                if (resultCode == Activity.RESULT_OK) {
+                    // After Ok code.
+                    Bundle bundle =data.getExtras();
+
+
+                    mYear   =      bundle.getInt(Statics.CALENDAR_YEAR);
+                    mMonth  =      bundle.getInt(Statics.CALENDAR_MONTH);
+                    mDay    =      bundle.getInt(Statics.CALENDAR_DAY);
+                    mAverageLengthOfMenstrualCycle =
+                            bundle.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE);
+
+                    Toast.makeText(getActivity().getApplicationContext(),"The year of the truth is " + mYear +
+
+                            "And the average duration of life is " + mAverageLengthOfMenstrualCycle,Toast.LENGTH_LONG).show();
+
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    // After Cancel code.
+                }
+
+            }
+
+
+    }
 
 
     @Override
