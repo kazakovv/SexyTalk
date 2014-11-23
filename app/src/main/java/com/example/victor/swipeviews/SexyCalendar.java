@@ -68,6 +68,7 @@ public class SexyCalendar extends Activity {
 
         CalendarPickerView calendar = (CalendarPickerView) findViewById(R.id.sexyCalendar);
         calendar.init(firstDateToDisplay, lastDateToDisplay)
+                .displayOnly()
                 .inMode(CalendarPickerView.SelectionMode.RANGE)
                 .withSelectedDates(datesForSex);
 

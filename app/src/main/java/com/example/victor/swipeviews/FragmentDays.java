@@ -2,6 +2,7 @@ package com.example.victor.swipeviews;
 
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ public class FragmentDays extends Fragment {
     
     protected static int LENGHT_OF_MENSTRUATION = 5;
 
+
+
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frament_love_days, container, false);
 
@@ -52,6 +55,20 @@ public class FragmentDays extends Fragment {
         SharedPreferences savedSettings = getActivity().getSharedPreferences("MYPREFS",0);
         sexyMessage.setText(savedSettings.getString("FertileMessage", ""));
         mainMessage.setText(savedSettings.getString("MainMessage","Welcome! Enter your settings to start using BabyTalk!"));
+
+
+        //vazstanoviava saved instance state variables
+
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            mYear = savedInstanceState.getInt(Statics.CALENDAR_YEAR);
+            mMonth = savedInstanceState.getInt(Statics.CALENDAR_MONTH);
+            mDay = savedInstanceState.getInt(Statics.CALENDAR_DAY);
+            mAverageLengthOfMenstrualCycle =
+                    savedInstanceState.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE);
+            setSexyMessage();
+        }
+
 
         showSexyCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +172,16 @@ public class FragmentDays extends Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        outState.putInt(Statics.CALENDAR_YEAR, mYear);
+        outState.putInt(Statics.CALENDAR_MONTH, mMonth);
+        outState.putInt(Statics.CALENDAR_DAY, mDay);
+        outState.putInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE, mAverageLengthOfMenstrualCycle);
 
+    }
 }
+
 
