@@ -39,6 +39,7 @@ public class SexyCalendar extends Activity {
             datesForSex.add(firstDayToHaveSex.getTime());
             datesForSex.add(lasttDayToHaveSex.getTime());
 
+
             //zadavame range, koito da se pokazva v kalendara
             Calendar temp = firstDayToHaveSex;
             temp.add(Calendar.MONTH, - MONTHS_TO_DISPLAY_IN_CALENDAR); //izvazhdam zashtoto ima minus
@@ -47,6 +48,7 @@ public class SexyCalendar extends Activity {
             temp = lasttDayToHaveSex;
             temp.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
             lastDateToDisplay = temp.getTime();
+
         }
 
 
