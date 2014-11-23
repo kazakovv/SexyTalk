@@ -2,12 +2,14 @@ package com.example.victor.swipeviews;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,7 @@ public class FragmentDays extends Fragment {
     
     protected static int LENGHT_OF_MENSTRUATION = 5;
 
+    FragmentManager mFragmentDays;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,14 @@ public class FragmentDays extends Fragment {
         sexyMessage.setText(savedSettings.getString("FertileMessage", ""));
         mainMessage.setText(savedSettings.getString("MainMessage","Welcome! Enter your settings to start using BabyTalk!"));
 
+        //tova e workaround za vazstanoviavane na stoinostite ot kalendara kato izpolzvam
+        //shared preferences.
+        restoreCalendarValuesFromSharedPrefs();
+        setSexyMessage();
 
         //vazstanoviava saved instance state variables
-        setRetainInstance(true);
+        //problemat e che vinagi vrashta null i zatova izpolzvam Shared Preferences,
+        // za da gi vaznanovia
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -181,16 +189,48 @@ public class FragmentDays extends Fragment {
 
     }
 
+    private void restoreCalendarValuesFromSharedPrefs() {
+
+        //workaroud, zashtoto savedinstanceState vrashta null i ne moga da vazstanovia dannite za
+        //kalendara vav fragmenta
+        SharedPreferences savedValues = getActivity()
+                .getSharedPreferences(Statics.SHARED_PREFS_CALENDAR_VALUES,0);
+        mYear = savedValues.getInt(Statics.CALENDAR_YEAR,0);
+        mMonth = savedValues.getInt(Statics.CALENDAR_MONTH,0);
+        mDay = savedValues.getInt(Statics.CALENDAR_DAY,0);
+        mAverageLengthOfMenstrualCycle =
+                savedValues.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE,0);
+
+
+
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        /* Tova po princip raboti, obache savedInstanceStave v onCrreateView e vinagi null
+        i zatova ne moga da vazstanovia tia stoinosti
 
         outState.putInt(Statics.CALENDAR_YEAR, mYear);
         outState.putInt(Statics.CALENDAR_MONTH, mMonth);
         outState.putInt(Statics.CALENDAR_DAY, mDay);
         outState.putInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE, mAverageLengthOfMenstrualCycle);
+        */
 
+        //workaroud, zashtoto SavedInstanceStave vinagi e null v onCreate i ne moga da vazsnanovia stoinostite
+        SharedPreferences savedSettings = getActivity()
+                .getSharedPreferences(Statics.SHARED_PREFS_CALENDAR_VALUES,0);
+
+        SharedPreferences.Editor editor = savedSettings.edit();
+        editor.putInt(Statics.CALENDAR_YEAR,mYear);
+        editor.putInt(Statics.CALENDAR_MONTH,mMonth);
+        editor.putInt(Statics.CALENDAR_DAY,mDay);
+        editor.putInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE,mAverageLengthOfMenstrualCycle);
+        editor.commit();
     }
+
+
 }
 
 

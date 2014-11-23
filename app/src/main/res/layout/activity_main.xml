@@ -8,7 +8,7 @@
     <fragment
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_days"
+        android:id="@+id/fragment_love_days"
         android:tag="MYTAG"
         android:name="com.example.victor.swipeviews.FragmentDays"
         android:layout_marginLeft="4dp"

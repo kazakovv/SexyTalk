@@ -36,8 +36,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
 
     public static final String TAG = Main.class.getSimpleName();
 
-    FragmentManager mFragmentManager;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -60,11 +58,14 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
             MaleOrFemale = currentUser.getString(ParseConstants.KEY_MALEORFEMALE);
 
 
+
         }
 
         pager = (ViewPager) findViewById(R.id.pager);
         PagerAdapter pAdapter = new PagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pAdapter);
+        pager.setOffscreenPageLimit(1);
+
         actionbar = getActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionbar.addTab(actionbar.newTab().setText(R.string.tab_days_title).setTabListener(this));
@@ -88,16 +89,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
         });
 
 
-        //za da moze da se zapisa saved instance state v FragmentDays
-
-
-        if(savedInstanceState == null) {
-            mFragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            FragmentDays fragment = new FragmentDays();
-            fragmentTransaction.add(R.id.fragment_days, fragment, "MYTAG");
-            fragmentTransaction.commit();
-        }
 
     }
 
@@ -226,6 +217,8 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
+
+
 
 
 

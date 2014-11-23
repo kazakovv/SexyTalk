@@ -11,6 +11,8 @@ public class Statics {
     public static final String CALENDAR_DAY = "day";
     public static final String AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE = "averageCycleLength";
 
+    public static final String SHARED_PREFS_CALENDAR_VALUES = "Calendar";
+
     //KEYS za podavane na info m/u FragmentDAys i SexyCalendar activity
 
     public static final String CALENDAR_FIRST_DAY_AFTER_MENSTRUATION = "firstDayAfterMenstruation";
