@@ -1,18 +1,14 @@
 package com.example.victor.swipeviews;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -21,20 +17,9 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Main extends FragmentActivity implements ActionBar.TabListener {
@@ -51,6 +36,7 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
 
     public static final String TAG = Main.class.getSimpleName();
 
+    FragmentManager mFragmentManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +87,17 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
             }
         });
 
+
+        //za da moze da se zapisa saved instance state v FragmentDays
+
+
+        if(savedInstanceState == null) {
+            mFragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            FragmentDays fragment = new FragmentDays();
+            fragmentTransaction.add(R.id.fragment_days, fragment, "MYTAG");
+            fragmentTransaction.commit();
+        }
 
     }
 

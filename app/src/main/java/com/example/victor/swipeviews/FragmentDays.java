@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,10 +42,17 @@ public class FragmentDays extends Fragment {
     protected static int LENGHT_OF_MENSTRUATION = 5;
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        if (savedInstanceState != null) {
+        //miracle
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frament_love_days, container, false);
-
         //vrazvam poletata, koito shte zapametiavam
         mainMessage = (TextView) inflatedView.findViewById(R.id.mainMessage);
         sexyMessage = (TextView) inflatedView.findViewById(R.id.textViewSexyMessage);
@@ -58,6 +66,7 @@ public class FragmentDays extends Fragment {
 
 
         //vazstanoviava saved instance state variables
+        setRetainInstance(true);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
