@@ -10,19 +10,20 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="What was the first day of your last period?"
-        android:id="@+id/textView2"
+        android:id="@+id/titleTextView"
         android:layout_below="@+id/signUpText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:gravity="center" />
+        android:gravity="center"
+        android:enabled="true" />
 
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/datePicker"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2"
+        android:layout_alignRight="@+id/titleTextView"
+        android:layout_alignEnd="@+id/titleTextView"
         android:calendarViewShown="false"
         android:focusable="false" />
 
@@ -39,5 +40,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinnerMenstrualCycleLength"
         android:layout_gravity="center_horizontal" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_sexy_calendar_update_checkbox"
+        android:id="@+id/sendSexyCalendarUpdateCheck"
+        android:layout_gravity="center_horizontal"
+        android:checked="true" />
 
 </LinearLayout>

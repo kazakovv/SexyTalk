@@ -10,7 +10,7 @@ public class Statics {
     public static final String CALENDAR_YEAR = "year";
     public static final String CALENDAR_DAY = "day";
     public static final String AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE = "averageCycleLength";
-
+    public static final String SEND_SEXY_CALENDAR_UPDATE_TO_PARTNERS = "sendSexyCalendarUpdate";
     public static final String SHARED_PREFS_CALENDAR_VALUES = "Calendar";
 
     //KEYS za podavane na info m/u FragmentDAys i SexyCalendar activity

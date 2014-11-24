@@ -8,44 +8,35 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.text.DateFormatSymbols;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Victor on 17/10/2014.
  */
-public class MenstrualCalendarDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
+public class SetFirstDayOfCycle extends DialogFragment implements AdapterView.OnItemSelectedListener {
     DatePicker datePicker;
     Spinner spinnerCycle;
     int averageLengthOfMenstrualCycle;
-
-
-
+    CheckBox sendSexyCalendarUpdateToPartners;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View inflatedView = inflater.inflate(R.layout.set_sex_and_date,null);
+        View inflatedView = inflater.inflate(R.layout.set_first_day_of_cycle,null);
 
-        //vrazvam kalendara
+        //vrazvam promenlivite
         datePicker = (DatePicker) inflatedView.findViewById(R.id.datePicker);
-
-
-
-        //vrazvam spinnerCycle
         spinnerCycle = (Spinner) inflatedView.findViewById(R.id.spinnerMenstrualCycleLength);
+        sendSexyCalendarUpdateToPartners = (CheckBox) inflatedView.findViewById(R.id.sendSexyCalendarUpdateCheck);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.LengthOfCycle, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -62,8 +53,6 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        //String messageToDisplay = calculateFertileDays();
-                        //sexyMessage.setText(messageToDisplay);
 
                         //vrashta infoto kam onActivityResult v FragmentDays
                         String averageCycleLength = spinnerCycle.getSelectedItem().toString();
@@ -76,7 +65,9 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                         extras.putInt(Statics.CALENDAR_DAY,datePicker.getDayOfMonth());
                         extras.putInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE,
                                 Integer.parseInt(averageCycleLength));
-
+                        extras.putBoolean(Statics.SEND_SEXY_CALENDAR_UPDATE_TO_PARTNERS,
+                                sendSexyCalendarUpdateToPartners.isChecked());
+                        boolean test = sendSexyCalendarUpdateToPartners.isChecked();
                         i.putExtras(extras);
                         getTargetFragment().onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,i);
                         dismiss() ;
@@ -86,7 +77,7 @@ public class MenstrualCalendarDialog extends DialogFragment implements AdapterVi
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MenstrualCalendarDialog.this.getDialog().cancel();
+                        SetFirstDayOfCycle.this.getDialog().cancel();
                     }
                 });
 

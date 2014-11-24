@@ -2,18 +2,14 @@ package com.example.victor.swipeviews;
 
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +41,7 @@ public class FragmentDays extends Fragment {
     private int mMonth;
     private int mDay;
     private int mAverageLengthOfMenstrualCycle;
+    private boolean mSendSexyCalendarUpdateToPartners;
 
     Calendar firstDayToHaveSex;
     Calendar lastDayToHaveSex;
@@ -110,7 +107,7 @@ public class FragmentDays extends Fragment {
             @Override
             public void onClick(View view) {
 
-                MenstrualCalendarDialog newDialog = new MenstrualCalendarDialog();
+                SetFirstDayOfCycle newDialog = new SetFirstDayOfCycle();
                 newDialog.setTargetFragment(FragmentDays.this,MENSTRUAL_CALENDAR_DIALOG);
                 newDialog.show(getFragmentManager(),"Welcome");
         }
@@ -138,40 +135,43 @@ public class FragmentDays extends Fragment {
                     mDay    =      bundle.getInt(Statics.CALENDAR_DAY);
                     mAverageLengthOfMenstrualCycle =
                             bundle.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE);
-
+                    mSendSexyCalendarUpdateToPartners =
+                            bundle.getBoolean(Statics.SEND_SEXY_CALENDAR_UPDATE_TO_PARTNERS);
                     //sexy message izchisliava firstDayToHaveSex i LastDayToHaveSex
                     // i izpisva saobshtenieto na stenata
                     setSexyMessage();
 
-                    //Sazdavame spisak na partniorite, za da im izpratim calendar update
-                    mPartnersRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
-                    ParseQuery<ParseUser> query =  mPartnersRelation.getQuery();
-                    query.findInBackground(new FindCallback<ParseUser>() {
-                        @Override
-                        public void done(List<ParseUser> parseUsers, ParseException e) {
-                            if(e == null) {
-                                //sazdavame ArrayList s partniorite
-                                final ArrayList<String> recepientIDs = new ArrayList<String>();
+                    //Ako mSendSexyCalendarUpdate to parners, izprashtame saobshtenieto
+                    if (mSendSexyCalendarUpdateToPartners == true) {
+                        //Sazdavame spisak na partniorite, za da im izpratim calendar update
+                        mPartnersRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
+                        ParseQuery<ParseUser> query = mPartnersRelation.getQuery();
+                        query.findInBackground(new FindCallback<ParseUser>() {
+                            @Override
+                            public void done(List<ParseUser> parseUsers, ParseException e) {
+                                if (e == null) {
+                                    //sazdavame ArrayList s partniorite
+                                    final ArrayList<String> recepientIDs = new ArrayList<String>();
 
-                                //sazdavame array s partniorite. Ako imame 0 partniori celiat blok
-                                //se propuska i nishto ne se sluchva
-                                for(ParseUser partner : parseUsers) {
-                                recepientIDs.add(partner.getObjectId()); //masiv s vsichki partniori
-                                //izprashtame calendar update na vsichki partniori
-                                SendParsePushMessagesAndParseObjects sendCal =
-                                        new SendParsePushMessagesAndParseObjects();
-                                sendCal.sendCalendarUpdate(mCurrentUser,recepientIDs,
-                                        firstDayToHaveSex.getTime(), lastDayToHaveSex.getTime(),
-                                        getActivity().getApplicationContext() );
+                                    //sazdavame array s partniorite. Ako imame 0 partniori celiat blok
+                                    //se propuska i nishto ne se sluchva
+                                    for (ParseUser partner : parseUsers) {
+                                        recepientIDs.add(partner.getObjectId()); //masiv s vsichki partniori
+                                        //izprashtame calendar update na vsichki partniori
+                                        SendParsePushMessagesAndParseObjects sendCal =
+                                                new SendParsePushMessagesAndParseObjects();
+                                        sendCal.sendCalendarUpdate(mCurrentUser, recepientIDs,
+                                                firstDayToHaveSex.getTime(), lastDayToHaveSex.getTime(),
+                                                getActivity().getApplicationContext());
+                                    }
+                                } else {
+                                    //error
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            R.string.error_sending_calendar_updates, Toast.LENGTH_LONG).show();
                                 }
-                            } else {
-                                //error
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                       R.string.error_sending_calendar_updates,Toast.LENGTH_LONG).show();
                             }
-                        }
-                    });
-
+                        });
+                    }//zatvariame proverkata dali da izprashteme sexy calendar update to parners
      } else if (resultCode == Activity.RESULT_CANCELED) {
                     // After Cancel code.
                 }
