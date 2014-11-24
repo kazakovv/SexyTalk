@@ -18,12 +18,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by Victor on 13/10/2014.
@@ -43,7 +48,9 @@ public class FragmentDays extends Fragment {
 
     Calendar firstDayToHaveSex;
     Calendar lastDayToHaveSex;
-    
+
+    protected ParseRelation<ParseUser> mPartnersRelation;
+
     protected static int LENGHT_OF_MENSTRUATION = 5;
 
     protected ParseUser mCurrentUser;
@@ -136,17 +143,36 @@ public class FragmentDays extends Fragment {
                     // i izpisva saobshtenieto na stenata
                     setSexyMessage();
 
-                    SendParsePushMessagesAndParseObjects sendCal = new SendParsePushMessagesAndParseObjects();
+                    //Sazdavame spisak na partniorite, za da im izpratim calendar update
+                    mPartnersRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
+                    ParseQuery<ParseUser> query =  mPartnersRelation.getQuery();
+                    query.findInBackground(new FindCallback<ParseUser>() {
+                        @Override
+                        public void done(List<ParseUser> parseUsers, ParseException e) {
+                            if(e == null) {
+                                //sazdavame ArrayList s partniorite
+                                final ArrayList<String> recepientIDs = new ArrayList<String>();
 
-                    mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
-                    ArrayList<String> recepientIDs = new ArrayList<String>();
-                    recepientIDs.add(mCurrentUser.getObjectId());
+                                //sazdavame array s partniorite. Ako imame 0 partniori celiat blok
+                                //se propuska i nishto ne se sluchva
+                                for(ParseUser partner : parseUsers) {
+                                recepientIDs.add(partner.getObjectId()); //masiv s vsichki partniori
+                                //izprashtame calendar update na vsichki partniori
+                                SendParsePushMessagesAndParseObjects sendCal =
+                                        new SendParsePushMessagesAndParseObjects();
+                                sendCal.sendCalendarUpdate(mCurrentUser,recepientIDs,
+                                        firstDayToHaveSex.getTime(), lastDayToHaveSex.getTime(),
+                                        getActivity().getApplicationContext() );
+                                }
+                            } else {
+                                //error
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                       R.string.error_sending_calendar_updates,Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
-
-                    sendCal.sendCalendarUpdate(mCurrentUser,recepientIDs,firstDayToHaveSex.getTime(),
-                            lastDayToHaveSex.getTime(),getActivity().getApplicationContext() );
-
-                } else if (resultCode == Activity.RESULT_CANCELED) {
+     } else if (resultCode == Activity.RESULT_CANCELED) {
                     // After Cancel code.
                 }
 

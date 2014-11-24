@@ -14,6 +14,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -135,7 +136,7 @@ public class SendParsePushMessagesAndParseObjects {
     }
  */
 
-    protected void sendCalendarUpdate(ParseUser currentParseUser,  ArrayList<String> recepientIDs,
+    protected void sendCalendarUpdate(ParseUser currentParseUser,  final ArrayList<String> recepientIDs,
                                       Date firstDayOfCycle, Date lastDateOfCycle,final Context context ) {
         ParseObject calendarUpdate = new ParseObject(ParseConstants.CLASS_CALENDAR_UPDATES);
         calendarUpdate.put(ParseConstants.KEY_SENDER_ID,currentParseUser.getObjectId());
@@ -148,10 +149,18 @@ public class SendParsePushMessagesAndParseObjects {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                Toast.makeText(context,"You sent calendar ",Toast.LENGTH_LONG).show();
-                }
-                else {
+                    //proveriavame kolko pratnira ima, za da izpratim Toast v edinistveno ili mnozhestveno chislo
+                    if (recepientIDs.size() > 1) {
+                        //ako imash poveche ot 1 partnior
+                        Toast.makeText(context, R.string.calendar_update_sent_plural, Toast.LENGTH_LONG).show();
+                    } else {
+                        //ako imash 1 partnior
+                        Toast.makeText(context, R.string.calendar_update_sent_singular, Toast.LENGTH_LONG).show();
+
+                    }
+                } else {
                 //faillure
+                    Log.d("Vic","faulure sending calendar update " + e.toString());
                 }
             }
         });
@@ -207,49 +216,8 @@ public class SendParsePushMessagesAndParseObjects {
         });
     }
 
-    /*
-    public void findPartners() {
-        mCurrentUser = ParseUser.getCurrentUser();
-        mPartnersRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
 
-        setProgressBarIndeterminateVisibility(true);
-        ParseQuery<ParseUser> query =  mPartnersRelation.getQuery();
-        query.addAscendingOrder(ParseConstants.KEY_USERNAME);
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> parseUsers, ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
 
-                if(e == null) {
-                    //Partners found
-                    mPartners = parseUsers;
-                    String[] usernames = new String[mPartners.size()];
-                    int i = 0;
-                    //sazdava masiv ot usernames
-                    for (ParseUser user : mPartners) {
-                        usernames[i] = user.getUsername();
-                        i++;
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            SendTo.this,
-                            android.R.layout.simple_list_item_checked,
-                            usernames
-                    );
-                    setListAdapter(adapter);
 
-                } else {
-                    //failure
-                    Log.e(TAG, e.getMessage());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SendTo.this);
-                    builder.setTitle(R.string.error_title)
-                            .setMessage(e.getMessage())
-                            .setPositiveButton(R.string.ok, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            }
-        });
-    }
-*/
 }
 
