@@ -42,10 +42,11 @@ public class CustomReceiver extends ParsePushBroadcastReceiver {
                         messageType=ParseConstants.TYPE_PUSH_KISS;
                     } else if (typeOfMessage.equals(ParseConstants.TYPE_PUSH_MESSAGE)) {
                         title = context.getString(R.string.title_receive_a_message_message);
-
+                        messageType = ParseConstants.TYPE_PUSH_MESSAGE;
                     }  else if (typeOfMessage.equals(ParseConstants.TYPE_PUSH_CALENDAR)) {
                         //tr da se dobavi imeto na choveka deto si e updatenal calendara
                         title = context.getString(R.string.title_update_calendar_notification);
+                        messageType = ParseConstants.TYPE_PUSH_CALENDAR;
                     }
                 showNotification(context, title, message, messageType);
 
@@ -65,8 +66,10 @@ public class CustomReceiver extends ParsePushBroadcastReceiver {
         int notifyID;
         if(messageType.equals(ParseConstants.TYPE_PUSH_KISS)) {
              notifyID = 1;
-        } else {
+        } else if (messageType.equals(ParseConstants.TYPE_PUSH_MESSAGE)) {
             notifyID = 2;
+        } else {
+            notifyID = 3;
         }
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)

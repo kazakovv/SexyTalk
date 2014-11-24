@@ -46,6 +46,8 @@ public class SendParsePushMessagesAndParseObjects {
         });
     }
 
+
+
     protected void sendPush( ArrayList<String> recepients, ArrayList<String> usernames,
                              String senderMessageText, String typeOfMessage,
                              String message, Context context) {
@@ -57,6 +59,7 @@ public class SendParsePushMessagesAndParseObjects {
             ParseQuery pushQuery = ParseInstallation.getQuery();
             pushQuery.whereEqualTo(ParseConstants.KEY_USER,
                     recepient);
+
 
             //dobaviame dopalinetelnata info kam JSON object
             JSONObject obj;
@@ -79,6 +82,7 @@ public class SendParsePushMessagesAndParseObjects {
 
                 } else if (typeOfMessage.equals(ParseConstants.TYPE_PUSH_CALENDAR)) {
                     obj.put(ParseConstants.KEY_ACTION, ParseConstants.TYPE_PUSH_CALENDAR);
+
                 }
 
 

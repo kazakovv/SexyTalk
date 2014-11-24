@@ -152,18 +152,33 @@ public class FragmentDays extends Fragment {
                                 if (e == null) {
                                     //sazdavame ArrayList s partniorite
                                     final ArrayList<String> recepientIDs = new ArrayList<String>();
+                                    final ArrayList<String> userNames = new ArrayList<String>();
+                                    //izprashtame calendar update na vsichki partniori
+                                    SendParsePushMessagesAndParseObjects sendParse =
+                                            new SendParsePushMessagesAndParseObjects();
 
                                     //sazdavame array s partniorite. Ako imame 0 partniori celiat blok
                                     //se propuska i nishto ne se sluchva
                                     for (ParseUser partner : parseUsers) {
                                         recepientIDs.add(partner.getObjectId()); //masiv s vsichki partniori
-                                        //izprashtame calendar update na vsichki partniori
-                                        SendParsePushMessagesAndParseObjects sendCal =
-                                                new SendParsePushMessagesAndParseObjects();
-                                        sendCal.sendCalendarUpdate(mCurrentUser, recepientIDs,
+                                        userNames.add(partner.getUsername());
+
+
+                                        //izprashtame message s sexy calendar
+                                        sendParse.sendCalendarUpdate(mCurrentUser, recepientIDs,
                                                 firstDayToHaveSex.getTime(), lastDayToHaveSex.getTime(),
                                                 getActivity().getApplicationContext());
                                     }
+                                    //izprashtame push message, che e imalo update na kalendata
+                                    // na partniorite
+                                    String message = mCurrentUser.getUsername() + " " +
+                                            getString(R.string.push_notification_message_update_sexy_calendar);
+
+                                    sendParse.sendPush(recepientIDs,userNames,"",
+                                            ParseConstants.TYPE_PUSH_CALENDAR,
+                                            message,getActivity().getApplicationContext());
+
+
                                 } else {
                                     //error
                                     Toast.makeText(getActivity().getApplicationContext(),

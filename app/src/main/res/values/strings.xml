@@ -57,7 +57,7 @@
     <string name="send_a_message_message">sent you a message</string>
     <string name="title_receive_a_kiss_message">You received a kiss</string>
     <string name="title_receive_a_message_message">You received a message</string>
-    <string name="title_update_calendar_notification">updated her private calendar</string>
+    <string name="title_update_calendar_notification">Sexy Calendar update</string>
     <string name="button_send_kiss">Send a kiss</string>
     <string name="button_send_message">Send a message</string>
     <string name="send_message_to">To:_____</string>
@@ -73,6 +73,7 @@
     <string name="calendar_update_sent_singular">You sent Sexy Calendar update to your partner</string>
     <string name="calendar_update_sent_plural">You sent Sexy Calendar update to your partners</string>
     <string name="send_sexy_calendar_update_checkbox">Send Sexy Calendar update</string>
+    <string name="push_notification_message_update_sexy_calendar">updated her Sexy Calendar</string>
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
