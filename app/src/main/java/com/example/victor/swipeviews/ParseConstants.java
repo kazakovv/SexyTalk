@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public final class ParseConstants {
     //Class name
     public static final String CLASS_MESSAGES = "Messages";
-
+    public static final String CLASS_CALENDAR_UPDATES = "CalendarUpdates";
     //Keys
 
     public static final String KEY_USERNAME = "username";
@@ -26,6 +26,8 @@ public final class ParseConstants {
     public static final String KEY_CREATEDAT = "createdAt";
     public static final String KEY_FILE_TYPE = "fileType";
     public static final String KEY_LOVE_MESSAGE = "loveMessage";
+    public static final String KEY_FIRST_DAY_OF_CYCLE = "firstDayOfCycle";
+    public static final String KEY_LAST_DAY_OF_CYCLE = "lastDayOfCycle";
 
     public static final String TYPE_IMAGE = "image";
     public static final String TYPE_VIDEO = "video";

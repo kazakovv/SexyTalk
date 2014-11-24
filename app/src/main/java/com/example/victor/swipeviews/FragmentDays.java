@@ -18,7 +18,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -43,7 +46,7 @@ public class FragmentDays extends Fragment {
     
     protected static int LENGHT_OF_MENSTRUATION = 5;
 
-    FragmentManager mFragmentDays;
+    protected ParseUser mCurrentUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class FragmentDays extends Fragment {
         sexyMessage = (TextView) inflatedView.findViewById(R.id.textViewSexyMessage);
         showSexyCalendarButton = (Button) inflatedView.findViewById(R.id.showSexyCalendarButton);
         showPrivateDaysCalendarButton = (Button) inflatedView.findViewById(R.id.showPrivateDaysDialog);
+
+        mCurrentUser = ParseUser.getCurrentUser();
 
         //Zarezda mainMessage ot savedSettings. Ako niama nishto zapazeno mu dava prazen text
         SharedPreferences savedSettings = getActivity().getSharedPreferences("MYPREFS",0);
@@ -85,9 +90,7 @@ public class FragmentDays extends Fragment {
                     savedInstanceState.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE);
             setSexyMessage();
         }
-
-
-        showSexyCalendarButton.setOnClickListener(new View.OnClickListener() {
+       showSexyCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), SexyCalendar.class);
@@ -96,25 +99,16 @@ public class FragmentDays extends Fragment {
                 startActivity(intent);
             }
         });
-
-
-
-        showPrivateDaysCalendarButton.setOnClickListener(new View.OnClickListener() {
+       showPrivateDaysCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 MenstrualCalendarDialog newDialog = new MenstrualCalendarDialog();
                 newDialog.setTargetFragment(FragmentDays.this,MENSTRUAL_CALENDAR_DIALOG);
                 newDialog.show(getFragmentManager(),"Welcome");
-
-
-            }
+        }
         });
-
-
-
-        return inflatedView;
-
+     return inflatedView;
     }
 
 
@@ -138,7 +132,19 @@ public class FragmentDays extends Fragment {
                     mAverageLengthOfMenstrualCycle =
                             bundle.getInt(Statics.AVERAGE_LENGTH_OF_MENSTRUAL_CYCLE);
 
+                    //sexy message izchisliava firstDayToHaveSex i LastDayToHaveSex
+                    // i izpisva saobshtenieto na stenata
                     setSexyMessage();
+
+                    SendParsePushMessagesAndParseObjects sendCal = new SendParsePushMessagesAndParseObjects();
+
+                    mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
+                    ArrayList<String> recepientIDs = new ArrayList<String>();
+                    recepientIDs.add(mCurrentUser.getObjectId());
+
+
+                    sendCal.sendCalendarUpdate(mCurrentUser,recepientIDs,firstDayToHaveSex.getTime(),
+                            lastDayToHaveSex.getTime(),getActivity().getApplicationContext() );
 
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     // After Cancel code.
@@ -172,6 +178,8 @@ public class FragmentDays extends Fragment {
 
         sexyMessage.setText(messageToDisplay);
     }
+
+
 
 
     @Override

@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
@@ -18,6 +20,8 @@ import com.parse.SaveCallback;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Sadarzha edin metod za izprashtane na push notifications, koito moze da se izpolzva navsiakade
@@ -130,6 +134,28 @@ public class SendParsePushMessagesAndParseObjects {
         return recepientIDs;
     }
  */
+
+    protected void sendCalendarUpdate(ParseUser currentParseUser,  ArrayList<String> recepientIDs,
+                                      Date firstDayOfCycle, Date lastDateOfCycle,final Context context ) {
+        ParseObject calendarUpdate = new ParseObject(ParseConstants.CLASS_CALENDAR_UPDATES);
+        calendarUpdate.put(ParseConstants.KEY_SENDER_ID,currentParseUser.getObjectId());
+        calendarUpdate.put(ParseConstants.KEY_SENDER_NAME, currentParseUser.getUsername());
+        calendarUpdate.put(ParseConstants.KEY_RECEPIENT_IDS,recepientIDs);
+        calendarUpdate.put(ParseConstants.KEY_FIRST_DAY_OF_CYCLE, firstDayOfCycle);
+        calendarUpdate.put(ParseConstants.KEY_LAST_DAY_OF_CYCLE, lastDateOfCycle);
+
+        calendarUpdate.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                Toast.makeText(context,"You sent calendar ",Toast.LENGTH_LONG).show();
+                }
+                else {
+                //faillure
+                }
+            }
+        });
+    }
     protected void send(ParseUser currentParseUser, ArrayList<String> recepientIDs,
                         String messageType, String loveMessage,
                         Uri mMediaUri, final Context context) {
@@ -181,5 +207,49 @@ public class SendParsePushMessagesAndParseObjects {
         });
     }
 
+    /*
+    public void findPartners() {
+        mCurrentUser = ParseUser.getCurrentUser();
+        mPartnersRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDSRELATION);
+
+        setProgressBarIndeterminateVisibility(true);
+        ParseQuery<ParseUser> query =  mPartnersRelation.getQuery();
+        query.addAscendingOrder(ParseConstants.KEY_USERNAME);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> parseUsers, ParseException e) {
+                setProgressBarIndeterminateVisibility(false);
+
+                if(e == null) {
+                    //Partners found
+                    mPartners = parseUsers;
+                    String[] usernames = new String[mPartners.size()];
+                    int i = 0;
+                    //sazdava masiv ot usernames
+                    for (ParseUser user : mPartners) {
+                        usernames[i] = user.getUsername();
+                        i++;
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            SendTo.this,
+                            android.R.layout.simple_list_item_checked,
+                            usernames
+                    );
+                    setListAdapter(adapter);
+
+                } else {
+                    //failure
+                    Log.e(TAG, e.getMessage());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SendTo.this);
+                    builder.setTitle(R.string.error_title)
+                            .setMessage(e.getMessage())
+                            .setPositiveButton(R.string.ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+    }
+*/
 }
 

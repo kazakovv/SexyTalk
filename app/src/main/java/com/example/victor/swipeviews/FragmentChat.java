@@ -50,6 +50,7 @@ public class FragmentChat extends ListFragment {
             @Override
             public void done(List<ParseObject> messages, ParseException e) {
                 getActivity().setProgressBarIndeterminateVisibility(false);
+
                 if (e == null) {
                     //sucessful!
                     mMessages = messages;
@@ -60,22 +61,18 @@ public class FragmentChat extends ListFragment {
                     for (ParseObject message : mMessages) {
                         usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
                         i++;
+                     //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
+
+                        MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
+                                mMessages);
+
+                        setListAdapter(adapter);
+
                     }
 
-                     //Tova e obiknoven array adapter
-/*
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            getListView().getContext(),
-                            android.R.layout.simple_list_item_1,
-                            usernames);
-*/
 
-                    //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
 
-                    MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
-                            mMessages);
 
-                    setListAdapter(adapter);
                 } else {
                     Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
