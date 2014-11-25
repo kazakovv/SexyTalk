@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.victor.swipeviews.SendTo">
+    tools:context="com.example.victor.swipeviews.ListWithPartners">
 
     <item android:id="@+id/action_ok"
         android:title="@string/ok"
@@ -13,4 +13,5 @@
         android:title="@string/menu_edit_partner"
         android:orderInCategory="100"
         android:showAsAction="never" />
+
 </menu>

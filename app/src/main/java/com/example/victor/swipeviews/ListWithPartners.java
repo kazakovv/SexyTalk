@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -20,14 +19,11 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
-public class SendTo extends ListActivity {
-    public static final String TAG = SendTo.class.getSimpleName();
+public class ListWithPartners extends ListActivity {
+    public static final String TAG = ListWithPartners.class.getSimpleName();
 
 
     protected List<ParseUser> mPartners;
@@ -47,6 +43,11 @@ public class SendTo extends ListActivity {
 
         //trasi koi e zadaden kato partnior i go izkarva v spisak
         findPartners();
+
+        //!!!!!!!!!!!!!!
+        //Tuk triabva da se dobavi check dali da moze da se izbira 1 ili poveche users
+        //Toya clas se izpolza i za izprashtane na saobshtenia, kadeto iskame da se izprashta do poveche hora
+        // i za gledane na Sexy kalendara, kadeto tra da e samo 1.
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         //inicializirame arraylists, za da mozem da dobaviame info kam tiah
@@ -77,7 +78,6 @@ public class SendTo extends ListActivity {
             mSendTo.remove(positionToRemove);
             mRecepientIDs.remove(positionToRemove);
             mRecepientUserNames.remove(positionToRemove);
-            //mSendTo.remove(new Integer(position));
 
         }
     }
@@ -90,7 +90,7 @@ public class SendTo extends ListActivity {
         int id = item.getItemId();
         switch(item.getItemId()) {
         case R.id.action_ok:
-            Intent intent = new Intent(SendTo.this, SendMessage.class);
+            Intent intent = new Intent(ListWithPartners.this, SendMessage.class);
 
             intent.putStringArrayListExtra(ParseConstants.KEY_USERNAME,mRecepientUserNames);
             intent.putStringArrayListExtra(ParseConstants.KEY_RECEPIENT_IDS,mRecepientIDs);
@@ -131,7 +131,7 @@ public class SendTo extends ListActivity {
                     i++;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                        SendTo.this,
+                        ListWithPartners.this,
                         android.R.layout.simple_list_item_checked,
                         usernames
                 );
@@ -140,9 +140,9 @@ public class SendTo extends ListActivity {
             } else {
             //failure
                 Log.e(TAG, e.getMessage());
-                AlertDialog.Builder builder = new AlertDialog.Builder(SendTo.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListWithPartners.this);
                 builder.setTitle(R.string.error_title)
-                        .setMessage(e.getMessage())
+                        .setMessage(R.string.general_error_message)
                         .setPositiveButton(R.string.ok, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();

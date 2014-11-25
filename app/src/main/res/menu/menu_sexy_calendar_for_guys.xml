@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/empty"
+        android:orderInCategory="101"
+        android:showAsAction="always"
+        android:title="@string/menu_edit_partner"
+        android:icon="@drawable/ic_action_overflow">
+        <menu>
+        <item android:id="@+id/choose_partner"
+            android:title="@string/menu_edit_partner"
+            android:orderInCategory="100"
+            android:showAsAction="never" />
+        </menu>
+    </item>
+
+</menu>

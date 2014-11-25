@@ -35,6 +35,7 @@ public class FragmentDays extends Fragment {
     private TextView sexyMessage;
     private Button showSexyCalendarButton;
     private Button showPrivateDaysCalendarButton;
+    private Button sexyCalendarForGuysButton;
 
     private static final int MENSTRUAL_CALENDAR_DIALOG = 11;
     private int mYear;
@@ -49,6 +50,7 @@ public class FragmentDays extends Fragment {
     protected ParseRelation<ParseUser> mPartnersRelation;
 
     protected static int LENGHT_OF_MENSTRUATION = 5;
+    protected static int RESULT_GET_LIST_OF_PARTNERS = 55;
 
     protected ParseUser mCurrentUser;
 
@@ -68,6 +70,7 @@ public class FragmentDays extends Fragment {
         sexyMessage = (TextView) inflatedView.findViewById(R.id.textViewSexyMessage);
         showSexyCalendarButton = (Button) inflatedView.findViewById(R.id.showSexyCalendarButton);
         showPrivateDaysCalendarButton = (Button) inflatedView.findViewById(R.id.showPrivateDaysDialog);
+        sexyCalendarForGuysButton = (Button) inflatedView.findViewById(R.id.sexyCalendarGuys);
 
         mCurrentUser = ParseUser.getCurrentUser();
 
@@ -97,10 +100,14 @@ public class FragmentDays extends Fragment {
        showSexyCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 Intent intent = new Intent(getActivity().getApplicationContext(), SexyCalendar.class);
                 intent.putExtra(Statics.CALENDAR_FIRST_DAY_AFTER_MENSTRUATION, firstDayToHaveSex);
                 intent.putExtra(Statics.CALENDAR_LAST_DAY_BEFORE_NEXT_CYCLE, lastDayToHaveSex);
                 startActivity(intent);
+
             }
         });
        showPrivateDaysCalendarButton.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +118,14 @@ public class FragmentDays extends Fragment {
                 newDialog.setTargetFragment(FragmentDays.this,MENSTRUAL_CALENDAR_DIALOG);
                 newDialog.show(getFragmentManager(),"Welcome");
         }
+        });
+
+        sexyCalendarForGuysButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), SexyCalendarForGuys.class);
+                startActivity(intent);
+            }
         });
      return inflatedView;
     }
@@ -192,8 +207,6 @@ public class FragmentDays extends Fragment {
                 }
 
             }
-
-
     }
 
     protected void setSexyMessage() {

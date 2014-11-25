@@ -74,13 +74,13 @@
     <string name="calendar_update_sent_plural">You sent Sexy Calendar update to your partners</string>
     <string name="send_sexy_calendar_update_checkbox">Send Sexy Calendar update</string>
     <string name="push_notification_message_update_sexy_calendar">updated her Sexy Calendar</string>
+    <string name="sexy_calendar_for_guys">Sexy Calendar for guys</string>
+    <string name="top_message_sexy_calendar_for_guys">Check the sexy calendar of your partner</string>
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
         <item>Choose Picture</item>
         <item>Choose Video</item>
     </string-array>
-
-
 
 </resources>

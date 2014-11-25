@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -116,7 +115,7 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
                 SendParsePushMessagesAndParseObjects pushM = new SendParsePushMessagesAndParseObjects();
                 String message = ParseUser.getCurrentUser().getUsername() + " " +
                         getString(R.string.send_a_kiss_message); //niakoi ti izprati celuvka
-                Intent intentSendTo = new Intent(Main.this, SendTo.class);
+                Intent intentSendTo = new Intent(Main.this, ListWithPartners.class);
                 startActivityForResult(intentSendTo, ACTIVITY_SEND_TO);
                 return true;
             case R.id.menu_send_message:
