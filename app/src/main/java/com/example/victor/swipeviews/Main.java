@@ -177,7 +177,7 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
+        inflater.inflate(R.menu.main_menu, menu);
         //vrazvam osnovnoto saobshtenie( your fertile days are/your partner fertile days are)
         mainMessage = (TextView) findViewById(R.id.mainMessage);
         //zadava dali iconkata na kalendara e enabled ili ne
