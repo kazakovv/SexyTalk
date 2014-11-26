@@ -14,7 +14,6 @@ import java.util.Date;
 
 public class SexyCalendar extends Activity {
 
-    public static final int MONTHS_TO_DISPLAY_IN_CALENDAR = 1;
 
     Calendar firstDayToHaveSex;
     Calendar lasttDayToHaveSex;
@@ -42,11 +41,11 @@ public class SexyCalendar extends Activity {
 
             //zadavame range, koito da se pokazva v kalendara
             Calendar temp = firstDayToHaveSex;
-            temp.add(Calendar.MONTH, - MONTHS_TO_DISPLAY_IN_CALENDAR); //izvazhdam zashtoto ima minus
+            temp.add(Calendar.MONTH, - Statics.MONTHS_TO_DISPLAY_IN_CALENDAR); //izvazhdam zashtoto ima minus
             firstDateToDisplay = temp.getTime();
 
             temp = lasttDayToHaveSex;
-            temp.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
+            temp.add(Calendar.MONTH, Statics.MONTHS_TO_DISPLAY_IN_CALENDAR);
             lastDateToDisplay = temp.getTime();
 
         }
@@ -60,7 +59,7 @@ public class SexyCalendar extends Activity {
 
             firstDateToDisplay = new Date(); //pokazva dneshnata data
             Calendar nextMonth = Calendar.getInstance();
-            nextMonth.add(Calendar.MONTH, MONTHS_TO_DISPLAY_IN_CALENDAR);
+            nextMonth.add(Calendar.MONTH, Statics.MONTHS_TO_DISPLAY_IN_CALENDAR);
             lastDateToDisplay = nextMonth.getTime();
         }
 

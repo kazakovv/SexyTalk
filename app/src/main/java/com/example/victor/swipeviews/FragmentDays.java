@@ -49,7 +49,6 @@ public class FragmentDays extends Fragment {
 
     protected ParseRelation<ParseUser> mPartnersRelation;
 
-    protected static int LENGHT_OF_MENSTRUATION = 5;
     protected static int RESULT_GET_LIST_OF_PARTNERS = 55;
 
     protected ParseUser mCurrentUser;
@@ -215,7 +214,7 @@ public class FragmentDays extends Fragment {
         lastDayToHaveSex = new GregorianCalendar(mYear,mMonth,mDay);
 
         //izchisliavane na dnite
-        firstDayToHaveSex.add(Calendar.DAY_OF_MONTH, LENGHT_OF_MENSTRUATION);
+        firstDayToHaveSex.add(Calendar.DAY_OF_MONTH, Statics.LENGHT_OF_MENSTRUATION);
         lastDayToHaveSex.add(Calendar.DAY_OF_MONTH, mAverageLengthOfMenstrualCycle);
 
         //sastaviane na message

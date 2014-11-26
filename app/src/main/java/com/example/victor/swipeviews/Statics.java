@@ -17,4 +17,7 @@ public class Statics {
 
     public static final String CALENDAR_FIRST_DAY_AFTER_MENSTRUATION = "firstDayAfterMenstruation";
     public static final String CALENDAR_LAST_DAY_BEFORE_NEXT_CYCLE = "lastDayBeforeNextCycle";
+
+    public static final int LENGHT_OF_MENSTRUATION = 5;
+    public static final int MONTHS_TO_DISPLAY_IN_CALENDAR = 1;
 }

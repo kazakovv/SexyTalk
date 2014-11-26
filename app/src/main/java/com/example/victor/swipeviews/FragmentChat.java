@@ -77,7 +77,7 @@ public class FragmentChat extends ListFragment {
                     Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
                     builder.setTitle(R.string.error_title)
-                            .setMessage(e.getMessage())
+                            .setMessage(R.string.general_error_message)
                             .setPositiveButton(R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
