@@ -15,14 +15,6 @@
         android:showAsAction="always"
         />
 
-
-    <item
-        android:id="@+id/menu_fertility_calendar"
-        android:title="@string/menu_calendar"
-        android:icon="@drawable/ic_menu_my_calendar"
-        android:showAsAction="always"
-        />
-
         <item
             android:id="@+id/main_menu"
             android:title="menu"

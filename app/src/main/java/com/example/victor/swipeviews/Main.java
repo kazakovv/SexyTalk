@@ -25,7 +25,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
     ViewPager pager;
     ActionBar actionbar;
     static Context context;
-    static MenuItem fertilityCalandarIcon; //izplolzva se za reference v MaleOrFemaleDialog.
     protected ParseUser currentUser;
 
     protected String MaleOrFemale;
@@ -123,12 +122,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
                 startActivity(intent);
                 return true;
 
-            case R.id.menu_fertility_calendar:
-                //MenstrualCalendarDialog newDialog = new MenstrualCalendarDialog();
-                //newDialog.show(getFragmentManager(), "Welcome");
-                //Log.d("Vic", "Calendar menu");
-                return true;
-
             case R.id.menu_sex:
                 DialogFragment sexDialog = new MaleOrFemaleDialog();
                 sexDialog.show(getFragmentManager(), "Welcome");
@@ -180,23 +173,19 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
         inflater.inflate(R.menu.main_menu, menu);
         //vrazvam osnovnoto saobshtenie( your fertile days are/your partner fertile days are)
         mainMessage = (TextView) findViewById(R.id.mainMessage);
-        //zadava dali iconkata na kalendara e enabled ili ne
-        fertilityCalandarIcon =  menu.findItem(R.id.menu_fertility_calendar);
+
+
         //proveriavame dali current user ne e null.
         if(currentUser != null) {
             if (MaleOrFemale.equals(ParseConstants.SEX_FEMALE)) {
-                fertilityCalandarIcon.setVisible(true);
                 mainMessage.setText(R.string.main_message_female);
 
             } else {
                 //ako ne e zhena triabva da e maz
-                fertilityCalandarIcon.setVisible(false);
                 mainMessage.setText(R.string.main_message_male);
 
             }
         }
-        //SharedPreferences savedSettings = getSharedPreferences("MYPREFS",0);
-        //fertilityCalandarIcon.setVisible(savedSettings.getBoolean("FertilityCalendar", true));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -217,11 +206,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
 
     }
 
-
-
-
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -230,7 +214,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
 
         SharedPreferences savedSettings = getSharedPreferences("MYPREFS",0);
         SharedPreferences.Editor editor = savedSettings.edit();
-        editor.putBoolean("FertilityCalendar",fertilityCalandarIcon.isVisible());
         editor.commit();
 
     }

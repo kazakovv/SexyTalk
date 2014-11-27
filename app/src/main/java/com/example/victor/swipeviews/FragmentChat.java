@@ -49,9 +49,10 @@ public class FragmentChat extends ListFragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> messages, ParseException e) {
-                getActivity().setProgressBarIndeterminateVisibility(false);
 
                 if (e == null) {
+                    getActivity().setProgressBarIndeterminateVisibility(false);
+
                     //sucessful!
                     mMessages = messages;
 
@@ -74,6 +75,8 @@ public class FragmentChat extends ListFragment {
 
 
                 } else {
+                    getActivity().setProgressBarIndeterminateVisibility(false);
+
                     Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
                     builder.setTitle(R.string.error_title)

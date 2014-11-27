@@ -38,7 +38,6 @@ public class MaleOrFemaleDialog extends DialogFragment {
                 switch(which) {
                     case 0:
                         mainMessage.setText(R.string.main_message_male);
-                        Main.fertilityCalandarIcon.setVisible(false);
 
                           parseUser.put(ParseConstants.KEY_MALEORFEMALE, ParseConstants.SEX_MALE);
                             parseUser.saveInBackground(new SaveCallback() {
@@ -62,7 +61,6 @@ public class MaleOrFemaleDialog extends DialogFragment {
                         break;
                     case 1:
                         mainMessage.setText(R.string.main_message_female);
-                        Main.fertilityCalandarIcon.setVisible(true);
                         parseUser.put(ParseConstants.KEY_MALEORFEMALE, ParseConstants.SEX_FEMALE);
                         parseUser.saveInBackground(new SaveCallback() {
                             @Override
