@@ -111,8 +111,9 @@ public class FragmentDays extends Fragment {
        showSexyCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                //sexy message izchisliava firstDayToHaveSex i LastDayToHaveSex
+                // i izpisva saobshtenieto na stenata
+                setSexyMessage();
 
                 Intent intent = new Intent(getActivity().getApplicationContext(), SexyCalendar.class);
                 intent.putExtra(Statics.CALENDAR_FIRST_DAY_AFTER_MENSTRUATION, firstDayToHaveSex);
