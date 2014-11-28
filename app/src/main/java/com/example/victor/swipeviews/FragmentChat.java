@@ -49,9 +49,11 @@ public class FragmentChat extends ListFragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> messages, ParseException e) {
+                if(getActivity() != null) {
+                    getActivity().setProgressBarIndeterminateVisibility(false);
+                }
 
                 if (e == null) {
-                    getActivity().setProgressBarIndeterminateVisibility(false);
 
                     //sucessful!
                     mMessages = messages;
@@ -63,19 +65,19 @@ public class FragmentChat extends ListFragment {
                         usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
                         i++;
                      //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
-
                         MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
                                 mMessages);
 
                         setListAdapter(adapter);
-
                     }
+
+                        //sazdavame adapter, ako list se niama takav. Naprimer, ako se
+                        // sazdava za prav pat
 
 
 
 
                 } else {
-                    getActivity().setProgressBarIndeterminateVisibility(false);
 
                     Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());

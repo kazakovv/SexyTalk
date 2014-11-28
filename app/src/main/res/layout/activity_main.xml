@@ -5,16 +5,7 @@
     android:layout_height="match_parent"
     >
 
-    <fragment
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_love_days"
-        android:tag="MYTAG"
-        android:name="com.example.victor.swipeviews.FragmentDays"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        class="com.example.victor.swipeviews.FragmentDays"
-        />
+
 
     </android.support.v4.view.ViewPager>
 

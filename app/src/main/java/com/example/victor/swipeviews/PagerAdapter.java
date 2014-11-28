@@ -32,11 +32,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return POSITION_NONE; //tova oznachava da updatene fragmentite.
+        //return POSITION_NONE; //tova oznachava da updatene fragmentite.
 
         //ako zapazim standartia statement dolu, ne se updatevat fragmentite
 
-        //return super.getItemPosition(object);
+        return super.getItemPosition(object);
     }
 
     @Override

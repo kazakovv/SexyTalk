@@ -126,7 +126,6 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
             case R.id.menu_sex:
                 DialogFragment sexDialog = new MaleOrFemaleDialog();
                 sexDialog.show(getFragmentManager(), "Welcome");
-                Log.d("Vic", "Sex menu");
 
                 return true;
             case R.id.menu_logout:
