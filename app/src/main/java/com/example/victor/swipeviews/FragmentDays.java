@@ -72,6 +72,18 @@ public class FragmentDays extends Fragment {
         sexyCalendarForGuysButton = (Button) inflatedView.findViewById(R.id.sexyCalendarGuys);
 
         mCurrentUser = ParseUser.getCurrentUser();
+        //proveriavame dali e maz ili zhena za da pokazhem butonite
+        if(mCurrentUser.get(ParseConstants.KEY_MALEORFEMALE).equals(ParseConstants.SEX_MALE)) {
+            showSexyCalendarButton.setVisibility(View.INVISIBLE);
+            showPrivateDaysCalendarButton.setVisibility(View.INVISIBLE);
+            sexyCalendarForGuysButton.setVisibility(View.VISIBLE);
+        } else { //ako e zhena pokazvame zhenskite kalendati
+            showSexyCalendarButton.setVisibility(View.VISIBLE);
+            showPrivateDaysCalendarButton.setVisibility(View.VISIBLE);
+            sexyCalendarForGuysButton.setVisibility(View.INVISIBLE);
+
+        }
+
 
         //Zarezda mainMessage ot savedSettings. Ako niama nishto zapazeno mu dava prazen text
         SharedPreferences savedSettings = getActivity().getSharedPreferences("MYPREFS",0);
@@ -131,7 +143,6 @@ public class FragmentDays extends Fragment {
 
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -173,6 +184,7 @@ public class FragmentDays extends Fragment {
 
                                     //sazdavame array s partniorite. Ako imame 0 partniori celiat blok
                                     //se propuska i nishto ne se sluchva
+                                    //izprashtame calendar update na vsichki partniori
                                     for (ParseUser partner : parseUsers) {
                                         recepientIDs.add(partner.getObjectId()); //masiv s vsichki partniori
                                         userNames.add(partner.getUsername());

@@ -91,6 +91,7 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
     }
 
 
+
     protected void navigateToLogin() {
         //preprashta kam login screen
         Intent intent = new Intent(this, LoginActivity.class);
@@ -126,6 +127,7 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
                 DialogFragment sexDialog = new MaleOrFemaleDialog();
                 sexDialog.show(getFragmentManager(), "Welcome");
                 Log.d("Vic", "Sex menu");
+
                 return true;
             case R.id.menu_logout:
                 currentUser.logOut();

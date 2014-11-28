@@ -234,27 +234,7 @@ public class SendMessage extends Activity {
                 }
             }
 
-
-            /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-            //startirame prozoreca, kadeto se izbira na kogo da pratish saobshtenieto.
-            Intent recipientsIntent = new Intent(this, ActivityRecipients.class);
-            recipientsIntent.setData(mMediaUri); //vrazvame mMediaUri kam intent
-            //Dobaviame tipa na file kam Intent
-            String fileType;
-            if(requestCode == TAKE_PHOTO_REQUEST || requestCode == CHOOSE_PHOTO_REQUEST) {
-                fileType = ParseConstants.TYPE_IMAGE;
-            } else {
-                fileType = ParseConstants.TYPE_VIDEO;
-            }
-            //dobaviame tipa na file kam Intent
-            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE,fileType);
-            startActivity(recipientsIntent);
-            */
-
-            createThumbnail(requestCode);
+         createThumbnail(requestCode);
         } else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this,R.string.general_error_message,Toast.LENGTH_LONG).show();
         }
@@ -400,13 +380,7 @@ public class SendMessage extends Activity {
 
 
 
-            //Izprashtam push notification
-            SendParsePushMessagesAndParseObjects pushM = new SendParsePushMessagesAndParseObjects();
-            String senderMessageText = ParseUser.getCurrentUser().getUsername() + " " +
-                    getString(R.string.send_a_message_message); //niakoi ti izprati sabshtenie
-            String loveMessage = messageToSend.getText().toString();
-            pushM.sendPush(parseObjectIDs, parseUserNames, senderMessageText,
-                    ParseConstants.TYPE_PUSH_MESSAGE,loveMessage, SendMessage.this);
+
 
             //Izprashtam Parse message
             SendParsePushMessagesAndParseObjects sendParse =
@@ -417,8 +391,18 @@ public class SendMessage extends Activity {
             mMessageType = ParseConstants.TYPE_TEXTMESSAGE;
             }
 
+            String loveMessage = messageToSend.getText().toString();
+
+
             sendParse.send(ParseUser.getCurrentUser(),parseObjectIDs,
                     mMessageType,loveMessage,mMediaUri, this);
+            //Izprashtam push notification
+
+            SendParsePushMessagesAndParseObjects pushM = new SendParsePushMessagesAndParseObjects();
+            String senderMessageText = ParseUser.getCurrentUser().getUsername() + " " +
+                    getString(R.string.send_a_message_message); //niakoi ti izprati sabshtenie
+            pushM.sendPush(parseObjectIDs, parseUserNames, senderMessageText,
+                    ParseConstants.TYPE_PUSH_MESSAGE,loveMessage, SendMessage.this);
 
             //Message sent.Switch to main screen.
             Intent intent = new Intent(SendMessage.this,Main.class);
