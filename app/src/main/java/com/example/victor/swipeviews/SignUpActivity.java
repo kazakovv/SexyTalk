@@ -1,5 +1,6 @@
 package com.example.victor.swipeviews;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -36,6 +37,9 @@ public class SignUpActivity extends Activity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); //vazmoznost da pokazva spinner dokato misli
 
         setContentView(R.layout.activity_sign_up);
+
+        ActionBar actionbar = getActionBar();
+        actionbar.hide(); //skirvame actionabar che e po-krasivo
 
         //Vrazvame opciite za spinner
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMaleOrFemale);

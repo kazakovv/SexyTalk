@@ -1,5 +1,6 @@
 package com.example.victor.swipeviews;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -29,6 +30,9 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); //vzmoznost da pokazva spinner dokato misli
         setContentView(R.layout.activity_login);
+
+        ActionBar actionbar = getActionBar();
+        actionbar.hide();//skirvame actionabar che e po-krasivo
 
         //vrazvame ostanalite TextFields i butona
         mUserName = (EditText) findViewById(R.id.login_username);

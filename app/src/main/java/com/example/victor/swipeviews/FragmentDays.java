@@ -72,19 +72,21 @@ public class FragmentDays extends Fragment {
         sexyCalendarForGuysButton = (Button) inflatedView.findViewById(R.id.sexyCalendarGuys);
 
         mCurrentUser = ParseUser.getCurrentUser();
-        //proveriavame dali e maz ili zhena za da pokazhem butonite
-        if(mCurrentUser.get(ParseConstants.KEY_MALEORFEMALE).equals(ParseConstants.SEX_MALE)) {
-            showSexyCalendarButton.setVisibility(View.INVISIBLE);
-            showPrivateDaysCalendarButton.setVisibility(View.INVISIBLE);
-            sexyCalendarForGuysButton.setVisibility(View.VISIBLE);
-        } else { //ako e zhena pokazvame zhenskite kalendati
-            showSexyCalendarButton.setVisibility(View.VISIBLE);
-            showPrivateDaysCalendarButton.setVisibility(View.VISIBLE);
-            sexyCalendarForGuysButton.setVisibility(View.INVISIBLE);
+        if(mCurrentUser != null) {//tr da se proveri. Main preprashta kam login, ako ne sme lognati
+            //obache se izplaniava i toia kod tuk predi da otde na login screen i zatova blokira
+            //proveriavame dali e maz ili zhena za da pokazhem butonite
+            if (mCurrentUser.get(ParseConstants.KEY_MALEORFEMALE).equals(ParseConstants.SEX_MALE)) {
+                showSexyCalendarButton.setVisibility(View.INVISIBLE);
+                showPrivateDaysCalendarButton.setVisibility(View.INVISIBLE);
+                sexyCalendarForGuysButton.setVisibility(View.VISIBLE);
+            } else { //ako e zhena pokazvame zhenskite kalendati
+                showSexyCalendarButton.setVisibility(View.VISIBLE);
+                showPrivateDaysCalendarButton.setVisibility(View.VISIBLE);
+                sexyCalendarForGuysButton.setVisibility(View.INVISIBLE);
 
-        }
+            }
 
-
+        }//krai na proverkata dali sme lognati
         //Zarezda mainMessage ot savedSettings. Ako niama nishto zapazeno mu dava prazen text
         SharedPreferences savedSettings = getActivity().getSharedPreferences("MYPREFS",0);
         sexyMessage.setText(savedSettings.getString("FertileMessage", ""));
