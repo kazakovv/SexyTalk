@@ -65,10 +65,12 @@ public class FragmentChat extends ListFragment {
                         usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
                         i++;
                      //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
-                        MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
-                                mMessages);
+                        if(getListView() != null) { //tova e check zastoto zabiva poniakoga!!!!
+                            MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
+                                    mMessages);
 
-                        setListAdapter(adapter);
+                            setListAdapter(adapter);
+                        }
                     }
 
                         //sazdavame adapter, ako list se niama takav. Naprimer, ako se

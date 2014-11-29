@@ -4,7 +4,7 @@
    <item
        android:id="@+id/menu_send_kiss"
        android:title="@string/menu_send_a_kiss"
-       android:icon="@drawable/ic_action_person"
+       android:icon="@drawable/ic_kiss"
        android:showAsAction="always"
        />
 
