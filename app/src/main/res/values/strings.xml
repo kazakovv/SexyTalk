@@ -18,8 +18,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="hint_login_username">Username</string>
     <string name="hint_login_password">Password</string>
-    <string name="log_in_button">Login</string>
-    <string name="sign_up_text">Sign up</string>
+    <string name="log_in_button">SIGN IN</string>
+    <string name="sign_up_text">Don\'t have an account? Sign up!</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="sign_up_email">Email</string>
     <string name="sign_up_error_message">Please make sure you enter username, password and email address!</string>
