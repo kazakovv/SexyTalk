@@ -1,7 +1,9 @@
 package com.example.victor.swipeviews;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,68 +31,85 @@ public class FragmentChat extends ListFragment {
 
     protected List<ParseObject> mMessages;
 
+    View myView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_love_box, container, false);
-
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        myView = getListView();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
         //tarsim dali imame polucheni saobshtenia
-        getActivity().setProgressBarIndeterminateVisibility(true);
+        if(ParseUser.getCurrentUser() !=null) {
+            //getActivity().setProgressBarIndeterminateVisibility(true);
 
-        ParseQuery<ParseObject> query = new ParseQuery(ParseConstants.CLASS_MESSAGES);
-        query.whereEqualTo(ParseConstants.KEY_RECEPIENT_IDS, ParseUser.getCurrentUser()
-                .getObjectId());
-        query.addAscendingOrder(ParseConstants.KEY_CREATEDAT);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> messages, ParseException e) {
-                if(getActivity() != null) {
-                    getActivity().setProgressBarIndeterminateVisibility(false);
-                }
+            ParseQuery<ParseObject> query = new ParseQuery(ParseConstants.CLASS_MESSAGES);
+            query.whereEqualTo(ParseConstants.KEY_RECEPIENT_IDS, ParseUser.getCurrentUser()
+                    .getObjectId());
+            query.addAscendingOrder(ParseConstants.KEY_CREATEDAT);
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> messages, ParseException e) {
+                 //   getActivity().setProgressBarIndeterminateVisibility(false);
 
-                if (e == null) {
 
-                    //sucessful!
-                    mMessages = messages;
+                    if (e == null) {
 
-                    String[] usernames = new String[mMessages.size()];
-                    int i = 0;
-                    //sazdava masiv ot usernames
-                    for (ParseObject message : mMessages) {
-                        usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
-                        i++;
-                     //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
-                        if(getListView() != null) { //tova e check zastoto zabiva poniakoga!!!!
-                            MessageAdapter adapter = new MessageAdapter(getListView().getContext(),
-                                    mMessages);
+                        //sucessful!
+                        mMessages = messages;
 
-                            setListAdapter(adapter);
+                        String[] usernames = new String[mMessages.size()];
+                        int i = 0;
+                        //sazdava masiv ot usernames
+                        for (ParseObject message : mMessages) {
+                            usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
+                            i++;
+                            //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
+
+                                MessageAdapter adapter = new MessageAdapter(myView.getContext(),
+                                        mMessages);
+
+                                setListAdapter(adapter);
+
                         }
-                    }
 
                         //sazdavame adapter, ako list se niama takav. Naprimer, ako se
                         // sazdava za prav pat
 
 
+                    } else {
 
-
-                } else {
-
-                    Log.e(TAG, e.getMessage());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
-                    builder.setTitle(R.string.error_title)
-                            .setMessage(R.string.general_error_message)
-                            .setPositiveButton(R.string.ok, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                        Log.e(TAG, e.getMessage());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+                        builder.setTitle(R.string.error_title)
+                                .setMessage(R.string.general_error_message)
+                                .setPositiveButton(R.string.ok, null);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
-            }
-        });
+            });
+
+        }//zatvariam check dali parsuser ne e null
+    }
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
