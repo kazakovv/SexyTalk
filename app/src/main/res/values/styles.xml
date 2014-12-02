@@ -27,7 +27,7 @@
 
     <style name="AppTheme" parent="@style/_AppTheme"/>
 
-    <style name="_AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="_AppTheme" parent="android:Theme.Holo.Light">
 
         <item name="android:editTextStyle">@style/EditTextAppTheme</item>
 

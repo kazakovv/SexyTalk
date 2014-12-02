@@ -21,7 +21,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Victor on 13/10/2014.
@@ -70,18 +75,25 @@ public class FragmentChat extends ListFragment {
 
                         String[] usernames = new String[mMessages.size()];
                         int i = 0;
-                        //sazdava masiv ot usernames
+
                         for (ParseObject message : mMessages) {
-                            usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
+                          usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
                             i++;
-                            //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
-
-                                MessageAdapter adapter = new MessageAdapter(myView.getContext(),
-                                        mMessages);
-
-                                setListAdapter(adapter);
-
                         }
+                        //sortirame mMessages, taka che poslednite saobshtenia da izlizat parvi
+
+                        Collections.sort(mMessages,new Comparator<ParseObject>() {
+                            @Override
+                            public int compare(ParseObject o1, ParseObject o2) {
+                                return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                            }
+                        });
+                        //Tova e po-gotinia ni ArrayAdaptor s kartinka v zavisimost ot tipa na file
+
+                        MessageAdapter adapter = new MessageAdapter(myView.getContext(),
+                                mMessages);
+
+                        setListAdapter(adapter);
 
                         //sazdavame adapter, ako list se niama takav. Naprimer, ako se
                         // sazdava za prav pat

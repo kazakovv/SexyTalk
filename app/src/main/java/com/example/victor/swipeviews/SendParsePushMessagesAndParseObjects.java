@@ -169,8 +169,9 @@ public class SendParsePushMessagesAndParseObjects {
             }
         });
     }
-    protected void send(ParseUser currentParseUser, ArrayList<String> recepientIDs,
-                        String messageType, String loveMessage,
+    protected void send(ParseUser currentParseUser, final ArrayList<String> recepientIDs,
+                        final ArrayList<String> recepientUserNames,
+                        String messageType, final String loveMessage,
                         Uri mMediaUri, final Context context) {
 
 
@@ -206,6 +207,12 @@ public class SendParsePushMessagesAndParseObjects {
                 if (e == null) {
                     //success
                     Toast.makeText(context,R.string.message_successfully_sent,Toast.LENGTH_LONG).show();
+                    //izprashtame push notification, che ima novo saobshtenie
+                    String senderMessageText = ParseUser.getCurrentUser().getUsername() + " " +
+                            loveMessage;
+                    sendPush(recepientIDs, recepientUserNames, senderMessageText,
+                            ParseConstants.TYPE_PUSH_MESSAGE,loveMessage, context);
+
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     //builder.setMessage(R.string.error_sending_file)

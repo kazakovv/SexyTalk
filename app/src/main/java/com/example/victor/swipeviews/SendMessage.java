@@ -394,15 +394,9 @@ public class SendMessage extends Activity {
             String loveMessage = messageToSend.getText().toString();
 
 
-            sendParse.send(ParseUser.getCurrentUser(),parseObjectIDs,
+            sendParse.send(ParseUser.getCurrentUser(),parseObjectIDs,parseUserNames,
                     mMessageType,loveMessage,mMediaUri, this);
-            //Izprashtam push notification
 
-            SendParsePushMessagesAndParseObjects pushM = new SendParsePushMessagesAndParseObjects();
-            String senderMessageText = ParseUser.getCurrentUser().getUsername() + " " +
-                    getString(R.string.send_a_message_message); //niakoi ti izprati sabshtenie
-            pushM.sendPush(parseObjectIDs, parseUserNames, senderMessageText,
-                    ParseConstants.TYPE_PUSH_MESSAGE,loveMessage, SendMessage.this);
 
             //Message sent.Switch to main screen.
             Intent intent = new Intent(SendMessage.this,Main.class);
