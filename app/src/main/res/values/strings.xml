@@ -76,11 +76,16 @@
     <string name="push_notification_message_update_sexy_calendar">updated her Sexy Calendar</string>
     <string name="sexy_calendar_for_guys">Sexy Calendar for guys</string>
     <string name="top_message_sexy_calendar_for_guys">Check the sexy calendar of your partner</string>
+    <string name="image_rotate_left">Rotate left</string>
+    <string name="image_rotate_right">Rotate right</string>
+
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
         <item>Choose Picture</item>
         <item>Choose Video</item>
     </string-array>
+
+    <string name="title_activity_view_text_message">ViewTextMessageActivity</string>
 
 </resources>

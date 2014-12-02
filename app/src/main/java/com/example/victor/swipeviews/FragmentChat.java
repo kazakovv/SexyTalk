@@ -150,7 +150,7 @@ public class FragmentChat extends ListFragment {
             startActivity(intent);
         } else if (messageType.equals(ParseConstants.TYPE_TEXTMESSAGE)){
             //ako e text go otvariame v sashtotia view kato image
-            Intent intent = new Intent(getActivity(), ViewImageActivity.class);
+            Intent intent = new Intent(getActivity(), ViewTextMessageActivity.class);
             intent.putExtra(ParseConstants.KEY_LOVE_MESSAGE, loveMessage);
             startActivity(intent);
 

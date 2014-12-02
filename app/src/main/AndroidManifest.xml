@@ -57,11 +57,7 @@
             android:label="@string/app_name"
             android:parentActivityName="com.example.victor.swipeviews.Main" >
         </activity>
-        <activity
-            android:name="com.example.victor.swipeviews.ActivityRecipients"
-            android:label="@string/app_name"
-            android:parentActivityName="com.example.victor.swipeviews.Main" >
-        </activity>
+
         <activity
             android:name="com.example.victor.swipeviews.ViewImageActivity"
             android:label="@string/app_name"
@@ -94,6 +90,11 @@
             android:name="com.example.victor.swipeviews.SexyCalendarForGuys"
             android:label="@string/app_name"
             android:parentActivityName="com.example.victor.swipeviews.Main" >
+        </activity>
+        <activity
+            android:name="com.example.victor.swipeviews.ViewTextMessageActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.example.victor.swipeviews.Main">
         </activity>
         <!-- Push notification parse -->
 
