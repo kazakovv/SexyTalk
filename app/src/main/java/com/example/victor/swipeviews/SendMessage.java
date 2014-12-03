@@ -290,12 +290,18 @@ public class SendMessage extends Activity {
             }
             int initialWidth = bitmap.getWidth();
             int initalHeight = bitmap.getHeight();
-            float ratio = initialWidth/initalHeight;
-            int newWidth = (int) (800*ratio);
-            int newHeight = 800;
+            int newWidth = 0;
+            int newHeight = 0;
+
+            //izchisliavame novite proporcii
+                float ratio =(float) initialWidth  / initalHeight;
+                newWidth = 800 ;
+                newHeight = (int) (800 * ratio) ;
 
             thumbnail = ThumbnailUtils.extractThumbnail(bitmap, newWidth, newHeight);
+
         } else { //ako ne e photo triabva da e video
+
             thumbnail = ThumbnailUtils.extractThumbnail(ThumbnailUtils.createVideoThumbnail(
                     mMediaUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND), 800, 500);
         }
